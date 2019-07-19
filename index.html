@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>TicTacToe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{
+            background-color: black;
+            color: deeppink;
+            text-align: center;
+        }
+        @-webkit-keyframes glow {
+            from {
+                text-shadow: 0 0 2px #fff, 0 0 3px #ff4da6, 0 0 4px #e60073, 0 0 5px #e60073, 0 0 6px #e60073, 0 0 7px #e60073, 0 0 8px #e60073;
+            }
+            to {
+                text-shadow: 0 0 4px #fff, 0 0 5px #ff4da6, 0 0 6px #ff4da6, 0 0 7px #ff4da6, 0 0 8px #ff4da6, 0 0 9px #ff4da6, 0 0 10px #ff4da6;
+            }
+        }
+        #XO{
+            margin-left: auto;
+            margin-right: auto;
+        }
+        td{
+            color: deeppink;
+            text-align: center;
+            height:30px;
+            width:30px;
+        }
+        input{
+            display: inline-block;
+            float: left;
+            border: 0px solid;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 30px;
+            background-color: black;
+            color: deeppink;
+        }
+        div{
+            display: table;
+            text-align: center;
+            width: 100%;
+        }
+        .a{
+            display: table-cell;
+            vertical-align: middle;
+            height: 100px;
+            width: 100px;
+            font-size: 30px;
+        }
+        h1{
+            -webkit-animation: glow 0.9s ease-in-out infinite alternate;
+        }
+        h6{
+            display: inline-block;
+            color: darkgrey;
+        }
+        code{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>TicTacToe</h1>
+    <div>
+        <div class="a b">
+            <h6><code>Player1</code><br/>X<br/><img id="p1" src="https://drive.google.com/uc?export=download&id=13KaBxylfuHeT9AtB7AeR-gYzzKR1liG7" width="20px" height="20px"/></h6>
+        </div>
+        <div class="a b">
+            <table id="XO" border="5">
+                <tr>
+                    <td><input id="11" type="text" maxlength="1"></td>
+                    <td><input id="12" type="text" maxlength="1"></td>
+                    <td><input id="13" type="text" maxlength="1"></td>
+                </tr>
+                <tr>
+                    <td><input id="21" type="text" maxlength="1"></td>
+                    <td><input id="22" type="text" maxlength="1"></td>
+                    <td><input id="23" type="text" maxlength="1"></td>
+                </tr>
+                <tr>
+                    <td><input id="31" type="text" maxlength="1"></td>
+                    <td><input id="32" type="text" maxlength="1"></td>
+                    <td><input id="33" type="text" maxlength="1"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="a b">
+            <h6><code>Player2</code><br/>O<br/><img id="p2" src="https://drive.google.com/uc?export=download&id=1RledzBdSLcqt6oDcAO_gPqS2vrXKC8jI" width="20px" height="20px"/></h6>
+        </div>
+    </div>  
+    <h2 id="X" hidden>X is the winner.<br>Hip Hip Hurray!</h2>
+    <h2 id="O" hidden>O is the winner.<br>Hip Hip Hurray!</h2>
+    <h2 id="D" hidden>Match draw (^o^)</h2>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        var p1 = document.getElementById("p1");
+        var p2 = document.getElementById("p2");
+        var i11 = document.getElementById("11");
+        var i12 = document.getElementById("12");
+        var i13 = document.getElementById("13");
+        var i21 = document.getElementById("21");
+        var i22 = document.getElementById("22");
+        var i23 = document.getElementById("23");
+        var i31 = document.getElementById("31");
+        var i32 = document.getElementById("32");
+        var i33 = document.getElementById("33");
+        var count = 0;
+        var X = [];
+        var O = [];
+        var r1,r2,r3,c1,c2,c3,d1,d2;
+        var wx = document.getElementById("X");
+        var wo = document.getElementById("O");
+        var mt = document.getElementById("D");
+        $('input[type="text"]').on('input keyup', function cellChecker() {  
+            if(count%2==0)
+                this.value = this.value.replace(/[^xX]/g,'');
+            else
+                this.value = this.value.replace(/[^oO]/g,'');
+            this.value = this.value.toUpperCase();
+            var temp;
+            if(this.value=='X'||this.value=='O'){
+                this.disabled = true;
+                temp = p1.src;
+                p1.src = p2.src;
+                p2.src= temp;
+                if(this.value=='X')
+                    X.push(parseInt(this.id));
+                else    
+                    O.push(parseInt(this.id));
+                count++;
+            }
+            tflag = true;
+            if(count>4){
+                r1  = ((i11.value == i12.value) && (i12.value == i13.value) && (i11.value=='X'||i11.value=='O'));
+                r2  = ((i21.value == i22.value) && (i22.value == i23.value) && (i21.value=='X'||i21.value=='O'));
+                r3  = ((i31.value == i32.value) && (i32.value == i33.value) && (i31.value=='X'||i31.value=='O'));
+                c1  = ((i11.value == i21.value) && (i21.value == i31.value) && (i11.value=='X'||i11.value=='O'));
+                c2  = ((i12.value == i22.value) && (i22.value == i32.value) && (i12.value=='X'||i12.value=='O'));
+                c3  = ((i13.value == i23.value) && (i23.value == i33.value) && (i13.value=='X'||i13.value=='O'));
+                d1  = ((i11.value == i22.value) && (i22.value == i33.value) && (i11.value=='X'||i11.value=='O'));
+                d2  = ((i13.value == i22.value) && (i22.value == i31.value) && (i13.value=='X'||i13.value=='O'));
+                if(r1||r2||r3||c1||c2||c3||d1||d2){
+                    i11.disabled=true;
+                    i12.disabled=true;
+                    i13.disabled=true;
+                    i21.disabled=true;
+                    i22.disabled=true;
+                    i23.disabled=true;
+                    i31.disabled=true;
+                    i32.disabled=true;
+                    i33.disabled=true;
+                    p1.src=p2.src="https://drive.google.com/uc?export=download&id=1RledzBdSLcqt6oDcAO_gPqS2vrXKC8jI";
+                    if(this.value=='X')
+                    {
+                        wx.hidden=false;
+                        tflag = false;
+                    }
+                    else
+                    {
+                        wo.hidden=false;
+                        tflag = false;
+                    }
+                }
+                if(count==9 && tflag){
+                    p1.src=p2.src="https://drive.google.com/uc?export=download&id=1RledzBdSLcqt6oDcAO_gPqS2vrXKC8jI";
+                    mt.hidden=false;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

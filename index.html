@@ -8,7 +8,7 @@
     <style>
         body{
             background-color: black;
-            background-image: url("Stage3.jpg");
+            background-image: url("Stage4.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             color: deeppink;
@@ -60,7 +60,8 @@
         }
         h6{
             display: inline-block;
-            color: darkgrey;
+            color: white;
+            /*-webkit-animation: glow 2s ease-in-out infinite alternate;*/
         }
         code{
             text-decoration: underline;
@@ -68,6 +69,10 @@
     </style>
 </head>
 <body>
+    <iframe src="silence.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+    <audio autoplay loop>
+        <source src="Dangerous.mp3" type="audio/mpeg">
+    </audio>
     <h1>TicTacToe</h1>
     <div>
         <div class="a b">
